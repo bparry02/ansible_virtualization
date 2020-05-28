@@ -17,7 +17,7 @@ provisioner:
   log: True
   playbooks:
     vagrant:
-      prepare: ../resources/playbooks/prepare.yml
+      prepare: prepare.yml
     converge: ../resources/playbooks/playbook.yml
     verify: ../resources/playbooks/verify.yml
   lint:

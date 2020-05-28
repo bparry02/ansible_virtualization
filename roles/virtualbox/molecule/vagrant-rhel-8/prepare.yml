@@ -1,0 +1,28 @@
+---
+- import_playbook: ../resources/playbooks/prepare.yml
+
+- name: Prepare - vagrant-rhel-8
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: remove disk-based yum repos
+      file:
+        path: /etc/yum.repos.d/RHEL8.repo
+        state: absent
+      become: yes
+
+    - name: add epel to provide dkms dependency
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+        state: present
+      become: yes
+
+    - import_role:
+        name: bparry.vagrant_vm_tools.rpms_subscription_manager
+      vars:
+        rhn_user: "{{ lookup('keyring', 'rhn username') }}"
+        rhn_pass: "{{ lookup('keyring', 'rhn password') }}"
+        redhat_repos:
+          - rhel-8-for-x86_64-baseos-rpms
+          - rhel-8-for-x86_64-appstream-rpms
