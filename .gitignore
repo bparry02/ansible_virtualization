@@ -3,3 +3,9 @@ docs/site
 id_rsa
 .vagrant
 *.pyc
+bin/
+lib/
+lib64
+pip-selfcheck.json
+pyvenv.cfg
+share/
